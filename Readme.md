@@ -13,10 +13,11 @@ The **Failed POST Request Alerting System** is designed to monitor the `/api/sub
 
 ## Features
 
-- **Failure Monitoring**: Continuously tracks failed POST requests to the `/api/submit` endpoint.
-- **Threshold Alerts**: Monitors requests per IP address and triggers an alert when a specific failure threshold is crossed.
-- **Persistent Logging**: Logs failures in a MongoDB database for easy tracking and analysis.
-- **Metrics Endpoint**: Exposes `/api/metrics` to retrieve failure logs and statistics.
+- **Failure Monitoring**: Continuously tracks failed POST requests to the `/api/submit` endpoint caused by invalid headers or incorrect access tokens.
+- **IP-based Tracking**: Monitors failed requests from each IP address within a configurable time window (e.g., 10 minutes).
+- **Threshold Alerts**: Triggers email alerts when a configured threshold (e.g., 5 failed attempts) from the same IP address is exceeded.
+- **Logging and Metrics Storage**: Logs failed requests with details such as source IP, timestamp, and reason for failure in a MongoDB database for analysis.
+- **Metrics Endpoint**: Exposes `/api/metrics` to retrieve stored failure logs and metrics.
 
 ## Prerequisites
 
