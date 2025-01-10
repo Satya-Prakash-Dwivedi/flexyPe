@@ -10,6 +10,8 @@ export const sendAlertEmail = async (ip: string, attempts: number) => {
 
   try {
     await emailTransporter.sendMail(mailOptions);
+    console.log("Email send successfully")
+
   } catch (error) {
     console.error('Error sending alert email:', error);
   }

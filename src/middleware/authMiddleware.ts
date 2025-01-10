@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import FailedRequest from '../models/FailedRequest';
 import { sendAlertEmail } from '../services/emailService';
+import { json } from 'stream/consumers';
 
 const failedRequests: Record<string, { count: number; firstAttempt: number }> = {};
 const THRESHOLD = 5;
@@ -9,7 +10,9 @@ const TIME_WINDOW = 10 * 60 * 1000; // 10 minutes
 export const validateHeaders = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { authorization } = req.headers;
-    const ip = req.ip || 'unknown'; // Fallback for undefined IP
+    console.log(`Headers ${JSON.stringify(req.headers)}`)
+    const ip = req.socket.remoteAddress || 'unknown'; // Fallback for undefined IP
+    console.log(`IP address ${ip}`)
     const currentTime = Date.now();
 
     if (authorization !== process.env.ACCESS_TOKEN) {
