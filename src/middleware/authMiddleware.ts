@@ -10,7 +10,12 @@ const TIME_WINDOW = 10 * 60 * 1000; // 10 minutes
 export const validateHeaders = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { authorization } = req.headers;
-    console.log(`Headers ${JSON.stringify(req.headers)}`)
+    if (!authorization){
+      console.log("Invalid header, no authorization found")
+      res.status(400).json({ message : "Invalid header, no authorization found"})
+    }
+    else {
+      console.log(`Headers ${JSON.stringify(req.headers)}`)
     const ip = req.socket.remoteAddress || 'unknown'; // Fallback for undefined IP
     console.log(`IP address ${ip}`)
     const currentTime = Date.now();
@@ -40,6 +45,8 @@ export const validateHeaders = async (req: Request, res: Response, next: NextFun
     }
 
     next();
+    }
+    
   } catch (error) {
     console.error('Error in validateHeaders middleware:', error);
     res.status(500).json({ message: 'Internal Server Error' });
